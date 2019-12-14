@@ -1,41 +1,39 @@
-# coding: utf-8
-from setuptools import setup, find_packages
-import os
-
-
-# not so bad: http://joebergantine.com/blog/2015/jul/17/releasing-package-pypi/
-version = __import__('filebase').__version__
-
-
-def read(fname):
-    # read the contents of a text file
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
+from setuptools import find_packages, setup
+from filebase import __version__
 
 setup(
-    name="django-filebase",
-    version=version,
-    url='http://github.com/benzkji/django-filebase',
-    license='MIT',
-    platforms=['OS Independent'],
-    description="media management for django",
-    long_description=read('PYPI.rst'),
-    author=u'Ben Stähli',
+    name='filebase',
+    version=__version__,
+    url='http://github.com/bnzk/django-filebase',
+    author='bnzk, rouxcode',
     author_email='bnzk@bnzk.ch',
-    packages=find_packages(),
-    install_requires=(
-        'Django>=1.11',
-        'easy-thumbnails>=2.0',
-    ),
+    description="File management for django projects. Django 2.2 and up only.",
+    license='BSD',
+    packages=find_packages(exclude=['tests']),
     include_package_data=True,
-    zip_safe=False,
+    python_requires='>=3.7',
+    install_requires=[
+        'Django>=2.2',
+        'easy_thumbnails>=2.6',
+    ],
+    extras_require={
+        'tests': [
+            'pytest~=4.4',
+            "pytest-django~=3.4",
+            'coverage~=4.5',
+        ],
+    },
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 3 - Alpha',
+        'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Internet :: WWW/HTTP',
     ],
 )

@@ -1,41 +1,27 @@
-# coding: utf-8
-
-from __future__ import unicode_literals
-from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from .abstract import Node
 
-@python_2_unicode_compatible
-class Folder(models.Model):
-    parent = models.ForeignKey(
-        'filebase.Folder',
-        null=True,
-        on_delete=models.CASCADE,
-        default=None,
-        blank=True,
-        verbose_name=_("parent")
-    )
+
+class Folder(Node):
+
     name = models.CharField(
-        max_length=32,
+        max_length=50,
         verbose_name=_('name'),
     )
-    created = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name=_('Created'),
-    )
-
-    def __str__(self):
-        return '%s' % self.name
 
     class Meta:
-        verbose_name = _(u'Folder')
-        verbose_name_plural = _(u'Folders')
+        abstract = False
+        ordering = ['name']
+        verbose_name = _('Folder')
+        verbose_name_plural = _('Folders')
 
-    @property
-    def children(self):
-        return self.folder_set.all()
+    def __str__(self):
+        return '{}'.format(self.name)
 
-    @property
-    def files(self):
-        return self.file_set.all()
+    def get_folders(self):
+        return self.filebase_folder_set.all()
+
+    def get_files(self):
+        return self.filebase_file_set.all()

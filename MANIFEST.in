@@ -2,6 +2,7 @@ include LICENSES
 include README.rst
 global-exclude *.orig *.pyc *.log *.swp
 
-recursive-include folderless/templates *
-recursive-include folderless/static *
+recursive-include docs *
 recursive-include folderless/locale *
+recursive-include folderless/static *
+recursive-include folderless/templates *
